@@ -57,7 +57,7 @@ class _RegisterState extends State<Register> {
                     color: Colors.pink,
                     child: Text("Register"),
                     onPressed: () async {
-                      if (_formKey.currentState?.validate() == null) {
+                      if (_formKey.currentState?.validate() ?? false) {
                         dynamic result =
                             await _auth.regWithEmailPass(email, password);
                         if (result == null) {

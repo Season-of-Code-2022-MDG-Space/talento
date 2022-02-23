@@ -27,6 +27,7 @@ class _SignInState extends State<SignIn> {
       body: Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 SizedBox(
@@ -57,10 +58,12 @@ class _SignInState extends State<SignIn> {
                     color: Colors.pink,
                     child: Text("sign in"),
                     onPressed: () async {
-                      var check = _formKey.currentState?.validate();
-                      if (check == null) {
+                      var check = _formKey.currentState?.validate() ?? false;
+                      print(check);
+                      if (check) {
                         dynamic result =
                             await _auth.signInWithEmailPass(email, password);
+                        print(result);
                         if (result == null) {
                           setState(() {
                             error = 'could not sign in with these credentials';
