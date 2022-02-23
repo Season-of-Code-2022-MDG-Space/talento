@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_project/services/auth.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    return const Text("home");
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Talentgram"),
+        actions: [
+          FlatButton.icon(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              icon: Icon(Icons.person),
+              label: Text("log out"))
+        ],
+      ),
+    );
   }
 }
