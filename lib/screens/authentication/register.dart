@@ -11,9 +11,11 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   String email = '';
   String password = '';
+  String error = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,20 +26,27 @@ class _RegisterState extends State<Register> {
       body: Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(onChanged: (Value) {
-                  setState(() {
-                    email = Value;
-                  });
-                }),
-                SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 TextFormField(
+                    validator: (value) =>
+                        value!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (Value) {
+                      setState(() {
+                        email = Value;
+                      });
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                    validator: (value) => value!.length < 6
+                        ? 'Enter a password 6 char long'
+                        : null,
                     obscureText: true,
                     onChanged: (Value) {
                       setState(() {
@@ -48,18 +57,29 @@ class _RegisterState extends State<Register> {
                     color: Colors.pink,
                     child: Text("Register"),
                     onPressed: () async {
-                      print(email);
-                      print(password);
+                      if (_formKey.currentState?.validate() == null) {
+                        dynamic result =
+                            await _auth.regWithEmailPass(email, password);
+                        if (result == null) {
+                          setState(() {
+                            error = 'supply valid email_id';
+                          });
+                        }
+                      }
                     }),
                 SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 RaisedButton(
                     color: Colors.pink,
                     child: Text("sign in"),
                     onPressed: () {
                       widget.toggleView!();
-                    })
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(error)
               ],
             ),
           )),

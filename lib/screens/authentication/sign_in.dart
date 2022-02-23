@@ -12,9 +12,11 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   String email = '';
   String password = '';
+  String error = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +30,23 @@ class _SignInState extends State<SignIn> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(onChanged: (Value) {
-                  setState(() {
-                    email = Value;
-                  });
-                }),
-                SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 TextFormField(
+                    validator: (value) =>
+                        value!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (Value) {
+                      setState(() {
+                        email = Value;
+                      });
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                    validator: (value) => value!.length < 6
+                        ? 'Enter a password 6 char long'
+                        : null,
                     obscureText: true,
                     onChanged: (Value) {
                       setState(() {
@@ -49,18 +57,30 @@ class _SignInState extends State<SignIn> {
                     color: Colors.pink,
                     child: Text("sign in"),
                     onPressed: () async {
-                      print(email);
-                      print(password);
+                      var check = _formKey.currentState?.validate();
+                      if (check == null) {
+                        dynamic result =
+                            await _auth.signInWithEmailPass(email, password);
+                        if (result == null) {
+                          setState(() {
+                            error = 'could not sign in with these credentials';
+                          });
+                        }
+                      }
                     }),
                 SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 RaisedButton(
                     color: Colors.pink,
                     child: Text("Register"),
                     onPressed: () {
                       widget.toggleView!();
-                    })
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(error)
               ],
             ),
           )),
