@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_project/screens/authentication/register.dart';
 import 'package:test_app_project/services/auth.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+  final Function? toggleView;
+  SignIn({this.toggleView});
 
   @override
   _SignInState createState() => _SignInState();
@@ -49,6 +51,15 @@ class _SignInState extends State<SignIn> {
                     onPressed: () async {
                       print(email);
                       print(password);
+                    }),
+                SizedBox(
+                  height: 20.0,
+                ),
+                RaisedButton(
+                    color: Colors.pink,
+                    child: Text("Register"),
+                    onPressed: () {
+                      widget.toggleView!();
                     })
               ],
             ),
