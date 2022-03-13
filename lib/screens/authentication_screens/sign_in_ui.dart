@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:test_app_project/screens/authentication/register.dart';
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
-import 'package:test_app_project/screens/home/home.dart';
+import 'package:flutter/material.dart';
 
 import 'package:test_app_project/services/auth.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function? toggleView;
-  LoginScreen({this.toggleView});
+  const LoginScreen({Key? key, this.toggleView}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -16,8 +14,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final AuthService _auth = AuthService();
 
   String email = '';
@@ -42,8 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.mail),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.mail),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Enter Your Email",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -66,8 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.vpn_key),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Enter Your Password",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -89,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 35,
                       child: Text(
                         "TALENTGRAM",
@@ -103,17 +101,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       //child: Image.asset(name
                       //fit:BoxFit.contain),
                     ),
-                    SizedBox(height: 45),
+                    const SizedBox(height: 45),
                     emailField,
-                    SizedBox(height: 35),
+                    const SizedBox(height: 35),
                     passwordField,
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     Material(
                       elevation: 5,
                       borderRadius: BorderRadius.circular(30),
                       color: Colors.purple,
                       child: MaterialButton(
-                        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                         minWidth: MediaQuery.of(context).size.width,
                         onPressed: () async {
                           var check =
@@ -131,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           "Login",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -142,40 +140,32 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account?"),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Register()));
-                          },
-                          child: TextButton(
-                            child: Text(
-                              "register",
-                              style: TextStyle(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15),
-                            ),
-                            onPressed: () {
-                              widget.toggleView!();
-                            },
+                        const Text("Don't have an account?"),
+                        TextButton(
+                          child: const Text(
+                            "register",
+                            style: TextStyle(
+                                color: Colors.purple,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15),
                           ),
+                          onPressed: () {
+                            widget.toggleView!();
+                          },
                         ),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Forgot Your Password?"),
+                        const Text("Forgot Your Password?"),
                         GestureDetector(
                           onTap: () {},
-                          child: Text(
+                          child: const Text(
                             "Reset Password",
                             style: TextStyle(
                                 color: Colors.purple,
@@ -185,6 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
+                    Text(error)
                   ],
                 ),
               ),

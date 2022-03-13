@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:test_app_project/screens/authentication/register.dart';
-import 'package:test_app_project/screens/authentication/sign_in.dart';
-import 'package:test_app_project/screens/ui screens/sign_in_ui.dart';
+import 'package:test_app_project/screens/authentication/profilemaker.dart';
+
+import 'package:test_app_project/screens/authentication_screens/sign_in_ui.dart';
 
 class Authenticate extends StatefulWidget {
   const Authenticate({Key? key}) : super(key: key);
@@ -14,9 +14,16 @@ class Authenticate extends StatefulWidget {
 
 class _AuthenticateState extends State<Authenticate> {
   bool showSignIn = true;
+  bool profilemaker = false;
   void toggleView() {
     setState(() {
       showSignIn = !showSignIn;
+    });
+  }
+
+  void whereto() {
+    setState(() {
+      profilemaker = true;
     });
   }
 
@@ -27,7 +34,7 @@ class _AuthenticateState extends State<Authenticate> {
         toggleView: toggleView,
       );
     } else {
-      return Register(
+      return RegSatge(
         toggleView: toggleView,
       );
     }

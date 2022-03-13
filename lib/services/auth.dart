@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test_app_project/models/user.dart';
 import 'package:test_app_project/services/database.dart';
@@ -27,15 +29,25 @@ class AuthService {
     }
   }
 
-  Future regWithEmailPass(String email, String password) async {
+  Future regWithEmailPass(
+      String email, String password, String name, String username) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-
-      await DataBaseService(uid: user!.uid).updateUserData();
+      await DataBaseService(uid: user!.uid).updateUserData(email);
+      await DataBaseService(uid: user.uid).updateUserProfile(name, username);
 
       return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future regstep1(String email, String password) async {
+    try {
+      return true;
     } catch (e) {
       print(e.toString());
       return null;
