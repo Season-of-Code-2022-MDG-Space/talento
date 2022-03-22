@@ -17,7 +17,7 @@ class _ShowUploadsState extends State<ShowUploads> {
         body: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("users")
-                .doc(widget.userId)
+                .doc("uid")
                 .collection("images")
                 .snapshots(),
             builder:
