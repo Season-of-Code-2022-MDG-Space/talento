@@ -46,6 +46,59 @@ class _ImageUploadState extends State<ImageUpload> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+    appBar: AppBar(
+        title: const Text("Upload Image "),
+      ),
+      body: Center(
+        child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: SizedBox(
+                    height: 500,
+                    width: double.infinity,
+                    child: Column(children: [
+                      const Text("Upload Image"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          width: 300,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.blue),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                    child: _image == null
+                                        ? const Center(
+                                            child: Text("No image selected"))
+                                        : Image.file(_image!)),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      imagePickerMethod();
+                                    },
+                                    child: const Text("Select Image")),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      if (_image != null) {
+                                        uploadImage(_image!);
+                                      } else {
+                                      }
+                                    },
+                                    child: const Text("Upload Image")),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ])))),
+      ),);
   }
 }
