@@ -5,6 +5,9 @@ class DataBaseService {
 
   DataBaseService({this.uid});
 
+  final CollectionReference collabdata =
+      FirebaseFirestore.instance.collection("collabs");
+
   final CollectionReference userdata =
       FirebaseFirestore.instance.collection('users');
 
@@ -17,5 +20,19 @@ class DataBaseService {
       {"name": name, "username": username},
       SetOptions(merge: true),
     );
+  }
+
+  Future createCollab(String? uid, String desc) async {
+    // ignore: avoid_single_cascade_in_expression_statements
+    List profiledata = [];
+    String name = '';
+    String username = '';
+    var temp = await userdata.doc(uid).get();
+    name = temp["name"];
+    username = temp["username"];
+
+    return await collabdata.doc(uid).set(
+        {"description": desc, "name": name, "username": username},
+        SetOptions(merge: true));
   }
 }

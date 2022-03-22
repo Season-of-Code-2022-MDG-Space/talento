@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<UserDetails?>.value(
       initialData: null,
       value: AuthService().userc,
-      child: const MaterialApp(
+      child: MaterialApp(
         home: Wrapper(),
       ),
     );
