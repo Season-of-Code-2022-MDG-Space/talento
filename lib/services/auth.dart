@@ -1,5 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test_app_project/models/user.dart';
+import 'package:test_app_project/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -9,15 +12,51 @@ class AuthService {
     return user != null ? UserDetails(uid: user.uid) : null;
   }
 
-  Stream<User?> get userc {
-    return _auth.authStateChanges();
+  Stream<UserDetails?> get userc {
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  Future signInAnon() async {
+  Future signInWithEmailPass(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInAnonymously();
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       User? user = result.user;
-      return _userFromFirebaseUser(user!);
+
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future regWithEmailPass(
+      String email, String password, String name, String username) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? user = result.user;
+      await DataBaseService(uid: user!.uid).updateUserData(email);
+      await DataBaseService(uid: user.uid).updateUserProfile(name, username);
+
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future regstep1(String email, String password) async {
+    try {
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
     } catch (e) {
       print(e.toString());
       return null;
