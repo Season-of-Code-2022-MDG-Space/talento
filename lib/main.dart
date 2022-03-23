@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().userc,
       child: const MaterialApp(
         home: Wrapper(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
